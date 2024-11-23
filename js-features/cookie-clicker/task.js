@@ -1,23 +1,20 @@
 const cookie = document.getElementById('cookie');
-const counter = document.getElementById('counter');
-
-// Инициализируем флаг размера
+const counter = document.getElementById('clicker__counter'); 
 let isExpand = true;
 
-// Обработчик клика на печеньку
+cookie.style.width = '200px';
+cookie.style.height = '200px';
+
 cookie.addEventListener('click', () => {
-  // Изменяем размер печеньки
+
   if (isExpand) {
-    cookie.style.width = '200px';
-    cookie.style.height = '200px';
+    cookie.style.height = '250px'; 
   } else {
-    cookie.style.width = '100px';
-    cookie.style.height = '100px';
+    cookie.style.height = '200px'; 
   }
-  
-  // Увеличиваем счетчик
+
+ 
   counter.textContent = parseInt(counter.textContent) + 1;
-  
-  // Меняем значение флага
+
   isExpand = !isExpand;
 });

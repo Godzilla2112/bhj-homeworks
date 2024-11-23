@@ -1,53 +1,32 @@
 const holes = document.querySelectorAll('.hole');
-let wins = 0;
-let losses = 0;
+const winsCounter = document.getElementById('dead');
+const lossesCounter = document.getElementById('lost');
+let wins = 0;   // для попаданий
+let losses = 0; // для промахов
 
-holes.forEach((hole, index) => {
-  hole.addEventListener('click', () => {
-    // Проверяем наличие класса hole_has-mole
-    if (hole.classList.contains('hole_has-mole')) {
-      // Увеличиваем количество побед
-      wins++;
-      console.log(`Победы: ${wins}`);
-    } else {
-      // Увеличиваем количество поражений
-      losses++;
-      console.log(`Поражения: ${losses}`);
+holes.forEach(hole => { // цикл перебора найденных лунок
+  hole.addEventListener('click', () => { // навешивание на каждую лунку слушателя клика
+    if (hole.classList.contains('hole_has-mole')) { // проверка, содержит ли лунка класс с кротом, если да, то
+      winsCounter.textContent = ++wins; // увеличили счётчик попаданий на странице
+      
+      if (wins === 10) { // проверяем достижение предела
+        alert('Вы победили!');
+        resetStats(); // вызываем ф-ию обнуления статистики
+      }
+    } else { // если нет, то
+      lossesCounter.textContent = ++losses; // увеличили счётчик промахов на странице
+      
+      if (losses === 5) { // проверяем достижение предела
+        alert('Вы проиграли!');
+        resetStats();
+      }
     }
-
-    // Обновляем статистику
-    updateStats();
-
-    // Генерируем новую случайную лунку с кротом
-    generateMole();
   });
 });
 
-function generateMole() {
-  // Удаляем класс hole_has-mole со всех лунок
-  holes.forEach((hole) => {
-    hole.classList.remove('hole_has-mole');
-  });
-
-  // Выбираем случайную лунку и добавляем ей класс hole_has-mole
-  const randomIndex = Math.floor(Math.random() * holes.length);
-  getHole(randomIndex).classList.add('hole_has-mole');
-}
-
-function updateStats() {
-  // Проверяем, достигнута ли победа
-  if (wins === 10) {
-    console.log('Вы победили!');
-    // Сбрасываем статистику
-    wins = 0;
-    losses = 0;
-  }
-
-  // Проверяем, достигнуто ли поражение
-  if (losses === 5) {
-    console.log('Вы проиграли!');
-    // Сбрасываем статистику
-    wins = 0;
-    losses = 0;
-  }
+function resetStats() { // ф-ия обнуления статистики
+  wins = 0;   // обнуление для значения попаданий
+  losses = 0; // обнуление для значения промахов
+  winsCounter.textContent = 0;   // обнуление попаданий на странице
+  lossesCounter.textContent = 0; // обнуление промахов на странице
 }
